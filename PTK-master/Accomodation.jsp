@@ -52,8 +52,29 @@
 <!-- ============ HEADER SECTION ============== -->
 <div id="header">
 <h1>PTK Social Media</h1>
-</div>
 
+<%
+			HttpSession session1 = request.getSession();
+			//String uss= session1.getAttribute("userID").toString();
+			try{
+			
+				if(session1.getAttribute("userID") != null){
+				 %>
+				<div style="float:left">welcome, <%= session1.getAttribute("userID") %></div>
+				<%
+					
+				}
+				else{
+				pageContext.forward("index.jsp");
+				}
+			}catch (IndexOutOfBoundsException e) {
+				System.err.println("IndexOutOfBoundsException: " + e.getMessage());
+			} catch (IOException e) {
+				System.err.println("Caught IOException: " + e.getMessage());
+			}
+%>
+Search Users : <input type="text" value = "Enter name" />
+</div>
 <!-- ============ LEFT COLUMN (MENU) ============== -->
 <div id="nav"><br><center><h3>
 <a href ="home.jsp">Home</a><br>
@@ -64,7 +85,9 @@
 <table>
   <td><tr><a href ="General.jsp">General Items</a></tr></td><br>
   <td><tr><a href ="Sale.jsp">Sale</a></tr></td><br>
-  <td><tr><a href ="Accomodation.jsp">Accomodation</a></tr></td>
+  <td><tr><a href ="Accomodation.jsp">Accomodation</a></tr></td><br>
+  <td><tr><a href ="Form.jsp">Add Item</a></tr></td>
+
 </table>
 <hr>
 <a href ="./logout.jsp">Logout</a><br>

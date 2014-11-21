@@ -57,31 +57,39 @@
 
 <%
 			HttpSession session1 = request.getSession();
-			String uss= session1.getAttribute("userID").toString();
-			if(uss != null){
-			 %>
-			welcome, <%= session1.getAttribute("userID") %>
-			<%	
-			}
-			else{
-			pageContext.forward("index.jsp");
+			try{
+			
+				if(session1.getAttribute("userID") != null){
+				 %>
+				<div style="float:left">welcome, <%= session1.getAttribute("userID") %></div>
+				<%
+					
+				}
+				else{
+				pageContext.forward("index.jsp");
+				}
+			}catch (IndexOutOfBoundsException e) {
+				System.err.println("IndexOutOfBoundsException: " + e.getMessage());
+			} catch (IOException e) {
+				System.err.println("Caught IOException: " + e.getMessage());
 			}
 %>
+Search Users : <input type="text" value = "Enter name" />
 </div>
-
 <!-- ============ LEFT COLUMN (MENU) ============== -->
 <div id = "nav"><br><center><h3>
 <a href ="home.jsp">Home</a><br>
 <a href ="">Message</a><br>
 <a href ="profile.jsp">Profile</a><br>
 <hr>
-<a href ="">Category</a><br>
-<ul>
-  <li><a href ="General.jsp">General Items</a></li>
-  <li><a href ="Sale.jsp">Sale</a></li>
-  <li><a href ="Accomodation.jsp">Accomodation</a></li>
-</ul>
-<br>
+<I>Categories</I> <br>
+<table>
+  <td><tr><a href ="General.jsp">General Items</a></tr></td><br>
+  <td><tr><a href ="Sale.jsp">Sale</a></tr></td><br>
+  <td><tr><a href ="Accomodation.jsp">Accomodation</a></tr></td><br>
+  <td><tr><a href ="Form.jsp">Add Item</a></tr></td>
+
+</table>
 <hr>
 <a href ="./logout.jsp">Logout</a><br>
 </h3>
@@ -94,6 +102,7 @@
 
 <CENTER>
 <%
+		String uss= session1.getAttribute("userID").toString();
 		ServletContext sc = this.getServletContext();
 		String path = sc.getRealPath("/WEB-INF/userInfo.txt");
 		List<String> lines = new ArrayList<String>();
