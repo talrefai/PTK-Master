@@ -1,4 +1,7 @@
-<%@ page language="java"  import="Categories.*, java.io.*, java.util.*" %>
+<%@ page language="java"  import="java.io.*, java.util.*,
+ java.text.*, javax.servlet.http.*" %>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
 <title>PTK</title>
@@ -82,70 +85,85 @@ Search Users : <input type="text" value = "Enter name" />
 <a href ="./logout.jsp">Logout</a><br>
 </h3></center>
 </div>
+
+<!-- End of Navigation -->
+
  
 <!-- ============ SECTION COLUMN (CONTENT) ============== -->
-	<div id="section">
-  <%
-  	Products c = null;
-          try
-          {
-             FileInputStream fileIn = new FileInputStream("items.txt");
-             ObjectInputStream in = new ObjectInputStream(fileIn);
-             c = (Products) in.readObject();
-             in.close();
-             fileIn.close();
-          }catch(IOException i)
-          {
-             i.printStackTrace();
-             return;
-          }catch(ClassNotFoundException cnf)
-          {
-             
-             cnf.printStackTrace();
-             return;
-          }
-    	  int i;
-    	   
-    	  ArrayList<Item> items= c.getItemList();
-    		Boolean isEmpty = true;
-    	  for(i=0;i<items.size();i++)
-    	  {
-    		  if( items.get(i).getType().equals("General")){
-    			  isEmpty = false;
-  	  		  String itemName= items.get(i).getName();
-  	  		  String desc = items.get(i).getDesc();
-  	  		 double price  =items.get(i).getPrice();
-  	  		 String image = items.get(i).getImgLink();
-  	  		 
-  	  		 
-  	  		 String mail = items.get(i).getMailId();
-  	  		 String phoneNo = items.get(i).getPhoneNo();
-  %>
-	  	
-		<center>
-      <form action="GetInfo" Method = "GET">
-      
-      <h2><%= itemName %> ($<%= price%>)</h2>
-		  <INPUT TYPE="HIDDEN" NAME="itemName" VALUE = <%=itemName %>  >
-	   
-      <input type="image" src=<%=image %> width="400" height="250">
-     
-      </form>
-      </center><br>
-	  		 <%
-  		  }
-    		 
-  	  }
-    	 if(isEmpty){  %>
-			  <h3><center>It Seems Empty here...</center></h3>
-			  <% }
-		  
-  %>
- </div>
-  
-  
+<center>
+<% 
+String name = session1.getAttribute("userID").toString();%>
 
-  <!-- ============ FOOTER SECTION ============== -->
+<form action="/PTK-master/ChatServlet" >
+
+<input type="hidden" name="fromname" value="<%= session1.getAttribute("userID") %>">
+<br />
+</br>
+TO : <input type="text" name="toname">
+<br/>
+</br>
+Message : <textarea name="message" rows="4" cols="50"></textarea>
+</br>
+</br>
+<input type="submit" value="SEND" />
+</form>
+<h2> Your Messages </h2>
+</center>	
+<%
+String filename= name + ".ser";
+%>
+
+<%
+HashMap<String , String[]> e = null;
+File f = new File(filename);
+if(f.isFile()) { 
+      try
+      {
+         FileInputStream fileIn = new FileInputStream(filename);
+         ObjectInputStream infil = new ObjectInputStream(fileIn);
+         e = (HashMap<String , String[]>) infil.readObject();
+         infil.close();
+         fileIn.close();
+		
+      }catch(IOException i)
+      {
+         i.printStackTrace();
+         return;
+      }catch(ClassNotFoundException c)
+      {
+       
+         c.printStackTrace();
+         return;
+      }
+
+TreeMap<String, String[]> tMap = new TreeMap<String,String[]>(e);
+NavigableMap<String, String[]> nmap=tMap.descendingMap();
+   for (Map.Entry<String, String[]> entry : nmap.entrySet())
+
+{
+    String key = entry.getKey(); 
+	String[] value = entry.getValue();
+			%>
+			
+          <div style="background-image: url(/status/bg1.png); height: 80px; width: 800px; border: 4px color:#3399FF; color:#3399FF; margin:10px; padding:10px;" align="center">
+<%= value[1] %>
+</br>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-by "<%= value[0]%>" <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= value[2] %>
+</div>
+
+<%
+
+} 
+e = null;
+}
+else
+	  {
+%>
+<H3>NO Messages</h3>
+<%
+	  }
+%>
+<!-- ============ FOOTER SECTION ============== -->
 <div id = "footer">
 PTK project
 </div>

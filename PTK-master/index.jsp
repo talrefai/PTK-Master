@@ -28,17 +28,10 @@
     padding:10px;
     BACKGROUND: white;	 	 
 }
-#right{
-	
-    background:#657dba;
-    height:80%;
-    width:20%;
-    float:right;
-    
 
-}   
 #footer {
-    background:#AE790C;
+    background:#142f75;
+	color:white;
     height:5%;
     width:100%
     color:white;
@@ -46,7 +39,6 @@
     text-align:center;
    padding:5px;	 	 
 }
-
 
 </style>
 <body>

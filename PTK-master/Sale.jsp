@@ -23,21 +23,12 @@
 }
 #section {
     padding:10px;
-    height:76%;
-    BACKGROUND: white;	
-     overflow: auto;	  	 
+    BACKGROUND: white;	 	 
 }
-#right{
-	
-    background:#657dba;
-    height:80%;
-    width:20%;
-    float:right;
-    
 
-}   
 #footer {
-    background:#AE790C;
+    background:#142f75;
+	color:white;
     height:5%;
     width:100%
     color:white;
@@ -45,14 +36,12 @@
     text-align:center;
    padding:5px;	 	 
 }
-
 </style>
 <body>
 
 <!-- ============ HEADER SECTION ============== -->
 <div id="header">
 <h1>PTK Social Media</h1>
-
 <%
 			HttpSession session1 = request.getSession();
 			//String uss= session1.getAttribute("userID").toString();
@@ -79,7 +68,7 @@ Search Users : <input type="text" value = "Enter name" />
 <!-- ============ LEFT COLUMN (MENU) ============== -->
 <div id="nav"><br><center><h3>
 <a href ="home.jsp">Home</a><br>
-<a href ="">Message</a><br>
+<a href ="messages.jsp">Message</a><br>
 <a href ="profile.jsp">Profile</a><br>
 <hr>
 <I>Categories</I> <br>
@@ -87,8 +76,7 @@ Search Users : <input type="text" value = "Enter name" />
   <td><tr><a href ="General.jsp">General Items</a></tr></td><br>
   <td><tr><a href ="Sale.jsp">Sale</a></tr></td><br>
   <td><tr><a href ="Accomodation.jsp">Accomodation</a></tr></td><br>
-  <td><tr><a href ="Form.jsp">Add Item</a></tr></td>
-
+  <td><tr><a href ="Form.jsp">Add item</a></tr></td>
 </table>
 <hr>
 <a href ="./logout.jsp">Logout</a><br>
